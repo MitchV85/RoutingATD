@@ -1,0 +1,69 @@
+! Startup-config last modified at  Sat Jul 28 18:24:54 2018 by admin
+! device: EOS3 (vEOS, EOS-4.21.0F-9031775.calgaryA1EFT1 (engineering build))
+!
+! boot system flash:/EOS-4.21.1F-EFT1-vEOS-lab.swi
+!
+switchport default mode routed
+!
+transceiver qsfp default-mode 4x10G
+!
+service routing protocols model multi-agent
+!
+hostname EOS3
+ip name-server vrf default 10.50.50.254
+ip domain-name eossandbox.local
+!
+ntp server 10.50.50.254 prefer
+!
+spanning-tree mode mstp
+!
+no aaa root
+!
+username admin privilege 15 role network-admin secret sha512 $6$hFjmkCxY46/XyV8C$nE1Kv8KuZGdQwh8v0Uay4j8ajztbpfTlPgdqsc9EE3P6xqeVvzfcfjOWb.w3prRLmKz.ebjQAcipHcCq2MGOG1
+username cvpadmin privilege 15 secret sha512 $6$FoP2HNGNw0wdNb8E$wv4DSSCZ8bWNTIDqGYVLgVlqLHfZApxr3XUODoFPKvyD337mxiSsj/zZ1gJntz13HhyJZSTXaAT7OHVcofx/M.
+!
+interface Ethernet1
+   description EOS9
+   switchport
+!
+interface Ethernet2
+   description EOS7
+   no switchport
+   ip address 10.3.7.3/24
+!
+interface Ethernet3
+   description EOS2
+   no switchport
+   ip address 10.2.3.3/24
+!
+interface Ethernet4
+   description EOS5
+   no switchport
+   ip address 10.3.5.3/24
+!
+interface Ethernet5
+   description EOS4
+   no switchport
+   ip address 10.3.4.3/24
+!
+interface Ethernet6
+   description EOS20
+   no switchport
+   ip address 10.3.20.2/24
+!
+interface Loopback0
+   ip address 3.3.3.3/32
+!
+interface Management1
+   ip address 10.50.50.23/24
+   no lldp transmit
+!
+ip route 10.11.11.0/24 10.50.50.1
+ip route 10.155.155.0/24 10.50.50.1
+!
+ip routing
+!
+management api http-commands
+   no shutdown
+!
+end
